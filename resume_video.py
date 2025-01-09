@@ -7,7 +7,7 @@ def resumir_texto(texto):
     Faça o resumo da forma mais detalhada possivel e perdendo a menor quantidade de informação possivel.
     O texto do video transcrito é: \n{texto}'''
 
-    #openai.api_key = 'Chave OpenAI Aqui'
+   #openai.api_key = '#chave API aqui'
     try:
         resposta = openai.chat.completions.create(
             model="gpt-4o-mini",  # ou "gpt-4"

@@ -1,18 +1,20 @@
 from baixa_video import *
 from resume_video import *
 from transcreve_video import *
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, jsonify
 import time
+import os
 
 app = Flask(__name__)
 
-def main(url, caminho='audio.mp3'):
+def main(url, caminho='audio.wav'):
     inicio = time.time()
     baixa_audio(url)
     texto = transcrever_audio_whisper(caminho_audio=caminho)
     resumo = resumir_texto(texto)
     final = time.time()
     tempo = final - inicio
+    os.remove('audio.wav')
     print(f'o tempo de execução é de {tempo} segundos.')
     return resumo
 
@@ -20,11 +22,11 @@ def main(url, caminho='audio.mp3'):
 def index():
     return render_template('index.html') 
 
-@app.route('/resumir', methods=['GET'])
+@app.route('/resumir', methods=['POST'])
 def resumir():
-    url = request.args['url']
+    url = request.json['url']
     resumo = main(url)
-    return resumo
-
-if __name__ == '__main__':
-    app.run(debug=True)
+    response_data={
+        "resumo":resumo
+    }
+    return jsonify(response_data)

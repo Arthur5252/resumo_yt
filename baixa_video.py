@@ -5,8 +5,8 @@ def baixa_audio(url):
         'format': 'bestaudio/best',
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
-            'preferredcodec': 'mp3',
-            'preferredquality': '192',
+            'preferredcodec': 'wav',
+            'preferredquality': '64',
         }],
         'outtmpl': 'audio.%(ext)s'
     }
